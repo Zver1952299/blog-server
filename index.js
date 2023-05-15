@@ -10,7 +10,7 @@ import { checkAuth, handleValidationErrors } from "./utils/index.js";
 import { UserControllers, PostControllers } from './controllers/index.js';
 
 mongoose
-    .connect('mongodb+srv://root:4444@cluster0.vtvolef.mongodb.net/blog')
+    .connect(process.env.MONGODB_URL)
     .then(() => console.log('DB ok'))
     .catch((err) => console.log('DB error', err));
 
@@ -48,7 +48,7 @@ app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, Post
 app.delete('/posts/:id', checkAuth, PostControllers.remove);
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostControllers.update);
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         console.log(err);
     }
